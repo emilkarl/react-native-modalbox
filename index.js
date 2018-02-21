@@ -370,7 +370,19 @@ var ModalBox = createReactClass({
     if (width !== this.state.width) newState.width = width;
     this.setState(newState);
 
-    if (this.onViewLayoutCalculated) this.onViewLayoutCalculated();
+
+    if (this.onViewLayoutCalculated) {
+      this.onViewLayoutCalculated();
+    }
+
+    if(this.state.isOpen) {
+      this.state.positionDest = this.calculateModalPosition(this.state.containerHeight - this.state.keyboardOffset, this.state.containerWidth);
+      if (this.state.keyboardOffset && (this.state.positionDest < this.props.keyboardTopOffset)) {
+        this.state.positionDest = this.props.keyboardTopOffset;
+      }
+
+      this.state.position.setValue(this.state.positionDest);
+    }
   },
 
   /*
